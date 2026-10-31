@@ -49,6 +49,15 @@ int diameter(Node *root)
     return max(leftDiameter, max(rightDiameter, rootDiameter));
 }
 
+void deleteTree(Node *root)
+{
+    if (root == nullptr)
+        return;
+    deleteTree(root->left);
+    deleteTree(root->right);
+    delete root;
+}
+
 int main()
 {
     vector<int> preorder = {1, 2, -1, -1, 3, 4, -1, -1, 5, -1, -1};
@@ -56,6 +65,8 @@ int main()
 
     cout << "Height: " << height(root) << endl;
     cout << "Diameter: " << diameter(root) << endl;
+
+    deleteTree(root);
 
     return 0;
 }
