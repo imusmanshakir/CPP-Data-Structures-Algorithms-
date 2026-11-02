@@ -1,30 +1,42 @@
 #include <iostream>
+#include <list>
 #include <vector>
 using namespace std;
 
-int main() {
-  int vertices = 4;
+class Graph {
+  int V;
+  list<int> *l; // int *arr
 
-  vector<vector<int>> graph(vertices, vector<int>(vertices, 0));
-
-  // Add undirected edges
-  graph[0][1] = 1;
-  graph[1][0] = 1;
-
-  graph[0][2] = 1;
-  graph[2][0] = 1;
-
-  graph[2][3] = 1;
-  graph[3][2] = 1;
-
-  // Print adjacency matrix
-  for (int i = 0; i < vertices; i++) {
-    for (int j = 0; j < vertices; j++) {
-      cout << graph[i][j] << " ";
-    }
-
-    cout << endl;
+public:
+  Graph(int V) {
+    this->V = V;
+    l = new list<int>[V];
   }
+  void addEdge(int u, int v) {
+    l[u].push_back(v);
+    l[v].push_back(u);
+  }
+
+  void printAdjList() {
+    for (int i = 0; i < V; i++) {
+      cout << i << " : ";
+      for (int neigh : l[i]) {
+        cout << neigh << " ";
+      }
+      cout << endl;
+    };
+  }
+};
+
+int main() {
+  Graph g(5);
+  g.addEdge(0, 1);
+  g.addEdge(1, 2);
+  g.addEdge(1, 3);
+  g.addEdge(2, 3);
+  g.addEdge(2, 4);
+
+  g.printAdjList();
 
   return 0;
 }
